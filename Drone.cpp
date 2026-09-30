@@ -157,6 +157,26 @@ int main()
             break;
     }
 
+    
+    int orderHour;
+    int orderMinute;
+    int weather;
+    cout << "\nWhat time are you placing the order? (24-hour clock)\n";
+    if (!readChoice("Hour (0-23): ", 0, 23, orderHour)
+        || !readChoice("Minute (0-59): ", 0, 59, orderMinute)) {
+        return 0;
+    }
+
+    cout << "\nCurrent weather:\n"
+         << "1. Clear\n2. Light rain\n3. Thunderstorm\n4. Strong wind\n";
+    if (!readChoice("Weather (1-4): ", 1, 4, weather)) {
+        return 0;
+    }
+
+    if (!checkDeliveryAvailability(day, dayName, orderHour, weather, distanceKm)) {
+        return 0;
+    }
+
     const double tripPrice = distanceCharge + dayCharge;
     cout << fixed << setprecision(2)
               << "\nTrip price for " << dayName << ": RM" << tripPrice
