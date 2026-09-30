@@ -108,6 +108,47 @@ bool checkDeliveryAvailability(int day, const string& dayName, int hour,
     return possible;
 }
 
+
+void showArrivalTime(double distanceKm, bool isExpress, int weather,
+                     int orderHour, int orderMinute)
+{
+    double speedKmh;
+    int prepMinutes; 
+
+    if (isExpress) {
+        speedKmh = 60.0;
+        prepMinutes = 10;
+    } else {
+        speedKmh = 40.0;
+        prepMinutes = 30;
+    }
+
+    
+    if (weather == 2) {
+        speedKmh = speedKmh * 0.8;
+    }
+
+    const int flightMinutes = static_cast<int>(ceil(distanceKm / speedKmh * 60.0));
+    const int totalMinutes = prepMinutes + flightMinutes;
+
+    
+    const int arrival = orderHour * 60 + orderMinute + totalMinutes;
+    const int arrivalHour = (arrival / 60) % 24;
+    const int arrivalMinute = arrival % 60;
+
+    cout << "\nEstimated arrival\n"
+         << "Preparation time: " << prepMinutes << " min\n"
+         << "Flight time: " << flightMinutes << " min\n"
+         << "Total wait: ";
+    if (totalMinutes >= 60) {
+        cout << totalMinutes / 60 << " hr " << totalMinutes % 60 << " min\n";
+    } else {
+        cout << totalMinutes << " min\n";
+    }
+    cout << "Drone arrives at about: " << setfill('0') << setw(2) << arrivalHour
+         << ':' << setw(2) << arrivalMinute << setfill(' ') << '\n';
+}
+
 int main()
 {
     int day;
