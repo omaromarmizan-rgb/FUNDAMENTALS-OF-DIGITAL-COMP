@@ -52,6 +52,24 @@ This version calculates prices only; delivery availability and arrival estimates
 
 ## Build and run
 
+### VS Code terminal (Windows)
+
+1. Open this project folder in VS Code using **File > Open Folder**.
+2. Open **Run and Debug** and select **Drone - VS Code terminal**.
+3. Press **F5** to build and debug, or **Ctrl+F5** to run without debugging.
+4. Click the **Terminal** panel and type an answer at each prompt, pressing Enter.
+
+You can also choose **Terminal > Run Task > Run Drone in terminal**.
+The terminal stays open after the program finishes so you can read the result.
+
+The included configuration uses the installed CodeBlocks MinGW `g++.exe` and
+`gdb.exe` under `C:\Program Files\CodeBlocks\MinGW\bin`. If you move this
+project to another computer, update these paths in `.vscode/tasks.json` and
+`.vscode/launch.json`. Use `g++` to link the C++ standard library correctly.
+The Debug Console is for debugger commands; enter program answers in Terminal.
+
+### Manual build
+
 With a C++ compiler such as g++:
 
 ```powershell

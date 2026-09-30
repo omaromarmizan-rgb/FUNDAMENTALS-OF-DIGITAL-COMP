@@ -6,9 +6,9 @@
 
 using namespace std;
 
-// Project surcharges in Malaysian ringgit; these are not market quotations.
+// Project surcharges in Malaysian ringgit.
 const double WEEKEND_SURCHARGE = 5.00;
-const double EXPRESS_SURCHARGE = 5.00;
+const double EXPRESS_SURCHARGE = 10.00;
 
 bool readChoice(const string& prompt, int minimum, int maximum, int& choice)
 {
@@ -57,21 +57,19 @@ int main()
     int service;
     string dayName;
     double distanceKm;
-    double marketRate;
+    const double marketRate = 15.55; // This is an example of the market rate; We can change it whenever we want to test the program with different rates.
     double dayCharge = 0.00;
 
-    cout << "Drone Delivery - Price Calculator\n"
+    cout << "\nDrone Delivery - Price Calculator\n"
               << "All prices are in Malaysian ringgit (RM).\n"
-              << "Enter the current delivery rate manually; no live price feed is connected.\n"
-              << "Project surcharges: weekends +RM5.00; express +RM5.00.\n\n";
+              << "Project surcharges: weekends +RM5.00; express +RM10.00.\n\n";
 
-    if (!readPositiveNumber("Delivery distance (km): ", distanceKm)
-        || !readPositiveNumber("Current market delivery rate (RM per km): ", marketRate)) {
+    if (!readPositiveNumber("Delivery distance (km): ", distanceKm)) {
         return 0;
     }
 
     // Round the distance charge to the nearest sen before adding surcharges.
-    const double distanceCharge = round(distanceKm * marketRate * 100.0) / 100.0;
+    const double distanceCharge = round(distanceKm * marketRate); // I have made the cost of the distance. 
     if (!isfinite(distanceCharge)) {
         cout << "The distance and rate are too large to calculate a price.\n";
         return 1;
