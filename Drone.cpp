@@ -252,5 +252,8 @@ int main()
               << "Service charge: RM" << serviceCharge << '\n'
               << "Total payment: RM" << tripPrice + serviceCharge << '\n';
 
+
+    showArrivalTime(distanceKm, service == 2, weather, orderHour, orderMinute);
+    
     return 0;
 }
