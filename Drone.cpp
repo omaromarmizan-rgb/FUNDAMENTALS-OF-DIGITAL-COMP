@@ -9,6 +9,11 @@ using namespace std;
 // Project surcharges in Malaysian ringgit.
 const double WEEKEND_SURCHARGE = 5.00;
 const double EXPRESS_SURCHARGE = 10.00;
+const int WEEKDAY_OPEN_HOUR = 8;
+const int WEEKDAY_CLOSE_HOUR = 20;
+const int WEEKEND_OPEN_HOUR = 9;
+const int WEEKEND_CLOSE_HOUR = 17;
+const double MAX_RANGE_KM = 30.0;
 
 bool readChoice(const string& prompt, int minimum, int maximum, int& choice)
 {
@@ -49,6 +54,58 @@ bool readPositiveNumber(const string& prompt, double& value)
         }
         cout << "Please enter a positive number (for example, 2.50).\n";
     }
+}
+
+bool checkDeliveryAvailability(int day, const string& dayName, int hour,
+                               int weather, double distanceKm)
+{
+    bool possible = true;
+    cout << "\nDelivery availability check for " << dayName << '\n';
+
+    
+    if (day >= 6) {
+        if (hour < WEEKEND_OPEN_HOUR || hour >= WEEKEND_CLOSE_HOUR) {
+            cout << "[X] Weekend deliveries only run from 9:00 to 17:00.\n";
+            possible = false;
+        }
+    } else {
+        if (hour < WEEKDAY_OPEN_HOUR || hour >= WEEKDAY_CLOSE_HOUR) {
+            cout << "[X] Weekday deliveries only run from 8:00 to 20:00.\n";
+            possible = false;
+        }
+    }
+
+    
+    switch (weather) {
+        case 1:
+            cout << "[OK] Clear weather.\n";
+            break;
+        case 2:
+            cout << "[!] Light rain: delivery allowed, but the drone flies slower.\n";
+            break;
+        case 3:
+            cout << "[X] Thunderstorm: drones cannot fly safely.\n";
+            possible = false;
+            break;
+        case 4:
+            cout << "[X] Strong wind: drones cannot fly safely.\n";
+            possible = false;
+            break;
+    }
+
+    
+    if (distanceKm > MAX_RANGE_KM) {
+        cout << "[X] " << distanceKm << " km is beyond the drone's "
+             << MAX_RANGE_KM << " km range.\n";
+        possible = false;
+    }
+
+    if (possible) {
+        cout << "Result: delivery is POSSIBLE on " << dayName << ".\n";
+    } else {
+        cout << "Result: delivery is NOT possible. Please choose another day or time.\n";
+    }
+    return possible;
 }
 
 int main()
