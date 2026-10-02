@@ -7,6 +7,7 @@
 using namespace std;
 
 // Project surcharges in Malaysian ringgit.
+// Drone operating hours (24-hour clock) and flight limits.
 const double WEEKEND_SURCHARGE = 5.00;
 const double EXPRESS_SURCHARGE = 10.00;
 const int WEEKDAY_OPEN_HOUR = 8;
@@ -56,13 +57,15 @@ bool readPositiveNumber(const string& prompt, double& value)
     }
 }
 
+// Checks whether the drone can deliver on the chosen day, time, weather and distance.
+// weather: 1 = clear, 2 = light rain, 3 = thunderstorm, 4 = strong wind
 bool checkDeliveryAvailability(int day, const string& dayName, int hour,
                                int weather, double distanceKm)
 {
     bool possible = true;
     cout << "\nDelivery availability check for " << dayName << '\n';
 
-    
+    // operating hours (weekends have shorter hours)
     if (day >= 6) {
         if (hour < WEEKEND_OPEN_HOUR || hour >= WEEKEND_CLOSE_HOUR) {
             cout << "[X] Weekend deliveries only run from 9:00 to 17:00.\n";
@@ -75,7 +78,7 @@ bool checkDeliveryAvailability(int day, const string& dayName, int hour,
         }
     }
 
-    
+    // the drone can only fly in safe weather.
     switch (weather) {
         case 1:
             cout << "[OK] Clear weather.\n";
@@ -93,7 +96,7 @@ bool checkDeliveryAvailability(int day, const string& dayName, int hour,
             break;
     }
 
-    
+    // the destination must be within the drone's battery range
     if (distanceKm > MAX_RANGE_KM) {
         cout << "[X] " << distanceKm << " km is beyond the drone's "
              << MAX_RANGE_KM << " km range.\n";
@@ -108,12 +111,12 @@ bool checkDeliveryAvailability(int day, const string& dayName, int hour,
     return possible;
 }
 
-
+// Estimates how long until the drone arrives and the clock time it arrives.
 void showArrivalTime(double distanceKm, bool isExpress, int weather,
                      int orderHour, int orderMinute)
 {
     double speedKmh;
-    int prepMinutes; 
+    int prepMinutes; // time to pack the parcel and launch the drone
 
     if (isExpress) {
         speedKmh = 60.0;
@@ -123,7 +126,7 @@ void showArrivalTime(double distanceKm, bool isExpress, int weather,
         prepMinutes = 30;
     }
 
-    
+    // Light rain slows the drone down by 20%.
     if (weather == 2) {
         speedKmh = speedKmh * 0.8;
     }
@@ -131,7 +134,7 @@ void showArrivalTime(double distanceKm, bool isExpress, int weather,
     const int flightMinutes = static_cast<int>(ceil(distanceKm / speedKmh * 60.0));
     const int totalMinutes = prepMinutes + flightMinutes;
 
-    
+    // Work out the clock time the drone arrives.
     const int arrival = orderHour * 60 + orderMinute + totalMinutes;
     const int arrivalHour = (arrival / 60) % 24;
     const int arrivalMinute = arrival % 60;
@@ -198,7 +201,7 @@ int main()
             break;
     }
 
-    
+    // Ask for the order time and weather, then check if delivery is possible
     int orderHour;
     int orderMinute;
     int weather;
@@ -252,7 +255,7 @@ int main()
               << "Service charge: RM" << serviceCharge << '\n'
               << "Total payment: RM" << tripPrice + serviceCharge << '\n';
 
-
+    // Show how long until the drone arrives.
     showArrivalTime(distanceKm, service == 2, weather, orderHour, orderMinute);
     
     return 0;
