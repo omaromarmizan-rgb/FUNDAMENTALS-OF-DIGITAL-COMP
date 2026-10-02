@@ -2,7 +2,7 @@
 
 A beginner C++ console program for the first two project objectives:
 
-1. Show the trip price based on distance, the current market rate, and the chosen day.
+1. Show the trip price based on distance, the current market rate, the chosen day and the weather.
 2. Let the user choose standard or express delivery.
 
 ## Inputs and outputs
@@ -68,11 +68,4 @@ project to another computer, update these paths in `.vscode/tasks.json` and
 `.vscode/launch.json`. Use `g++` to link the C++ standard library correctly.
 The Debug Console is for debugger commands; enter program answers in Terminal.
 
-### Manual build
 
-With a C++ compiler such as g++:
-
-```powershell
-g++ -std=c++11 -Wall -Wextra -pedantic Drone.cpp -o Drone.exe
-.\Drone.exe
-```
