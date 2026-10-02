@@ -166,7 +166,7 @@ int main()
         return 0;
     }
 
-    // Round the distance charge to the nearest sen before adding surcharges.
+    // Get a the price for the distance. If the distance charge is too large to calculate, we will return an error message.
     const double distanceCharge = distanceKm * marketRate ;  // I have made the cost of the distance. 
     if (!isfinite(distanceCharge)) {
         cout << "The distance and rate are too large to calculate a price.\n";
