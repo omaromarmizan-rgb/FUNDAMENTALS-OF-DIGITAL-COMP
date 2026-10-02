@@ -2,7 +2,7 @@
 
 A beginner C++ console program for the first two project objectives:
 
-1. Show the trip price based on distance, the current market rate, and the chosen day.
+1. Show the trip price based on distance, the current market rate, the chosen day and the weather.
 2. Let the user choose standard or express delivery.
 
 ## Inputs and outputs
