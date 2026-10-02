@@ -68,11 +68,4 @@ project to another computer, update these paths in `.vscode/tasks.json` and
 `.vscode/launch.json`. Use `g++` to link the C++ standard library correctly.
 The Debug Console is for debugger commands; enter program answers in Terminal.
 
-### Manual build
 
-With a C++ compiler such as g++:
-
-```powershell
-g++ -std=c++11 -Wall -Wextra -pedantic Drone.cpp -o Drone.exe
-.\Drone.exe
-```
